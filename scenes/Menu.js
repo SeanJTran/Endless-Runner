@@ -8,11 +8,14 @@ class Menu extends Phaser.Scene{
     }
 
     create(){
+      keySpace = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
       this.add.text(game.config.width/2, game.config.height/2, "YooHoo");
-      this.scene.start('playScene');
+      
     }
 
     update(){
-
+      if(Phaser.Input.Keyboard.JustDown(keySpace)){
+        this.scene.start('playScene');
+      }
     }
 }
