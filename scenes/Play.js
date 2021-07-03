@@ -2,6 +2,7 @@ class Play extends Phaser.Scene {
     constructor() {
         super("playScene");
         this.gameStart = false;
+        this.gameOver = false;
     }
     
     preload() {
@@ -47,7 +48,7 @@ class Play extends Phaser.Scene {
 
     update(){
         this.spaceDown = Phaser.Input.Keyboard.JustDown(keySpace)
-        if(this.spaceDown && !this.gameStart){
+        if(this.spaceDown && !this.gameStart && !this.gameOver){
             this.gameStart = true;
             this.physics.enableUpdate();
             this.spawnObsticle(this.textureList[0]);
@@ -58,9 +59,17 @@ class Play extends Phaser.Scene {
             //scroll background tile
             this.bg.tilePositionX += 1;
 
+            //player jump
             if(this.spaceDown){
                 this.character.body.setVelocity(0, -700);
             }
+        }
+
+        if(this.gameOver){
+            //add text popup here to indicate players options
+
+            //implement button listener here to restart or menu
+            //maybe spacebar is restart? following the spacebar trend
         }
     }
 
@@ -75,12 +84,17 @@ class Play extends Phaser.Scene {
         }
     }
 
+    endGame(){
+        this.gameStart = false;
+        this.gameOver = true;
+    }
     //experimental method
     spawnObsticle(texture){
         this.obsticle = this.add.sprite(game.config.width, game.config.height - borderPadding*2 - borderUISize, texture).setOrigin(0,0);
         this.physics.add.existing(this.obsticle);
         this.obsticle.body.setAllowGravity(false);
         this.obsticle.body.setVelocity(-100, 0);
-        this.physics.add.collider(this.character, this.obsticle);
+        this.physics.add.collider(this.character, this.obsticle, endGame);
+        this.obsticle.body.pushable = false;
     }
 }
