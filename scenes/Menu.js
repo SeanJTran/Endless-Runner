@@ -4,10 +4,11 @@ class Menu extends Phaser.Scene{
     }
 
     preload(){
+      this.load.image('backgroundmenu', './assets/backgroundtitle.png')
     }
 
     create(){
-      this.add.text(game.config.width/2, game.config.height/2, "Menu");
+      this.backgroundmenu = this.add.tileSprite(0, 0, 720 , 480, 'backgroundmenu').setOrigin(0, 0);
       keySpace = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
     }
 
