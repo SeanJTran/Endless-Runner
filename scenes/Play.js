@@ -145,6 +145,7 @@ class Play extends Phaser.Scene {
             }
             //button listener here to restart
             if(this.spaceDown && this.canRestart){
+                this.sound.stopAll();
                 this.scene.restart();
             }
         }
