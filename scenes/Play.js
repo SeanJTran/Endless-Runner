@@ -6,6 +6,7 @@ class Play extends Phaser.Scene {
     }
     
     preload() {
+        this.load.audio("playbgm", "./assets/bgm.mp3")
         this.load.image('windows', './assets/Windows.png');
         this.load.image('background', './assets/background.png');
         this.load.image('character', './assets/character.png');
@@ -14,6 +15,17 @@ class Play extends Phaser.Scene {
     }
 
     create() {
+        let playBGM = {
+            mute: false,
+            volume: 0.5,
+            rate: 0.9,
+            detune: 0,
+            seek: 0,
+            loop: true,
+            delay: 0,
+            pan: 0
+        }
+        this.sound.play("playbgm", playBGM);
         this.floorSize = 10;
         let playTextConfig = {
             fontSize: '32px',
@@ -39,10 +51,21 @@ class Play extends Phaser.Scene {
         this.physics.add.existing(this.character);
         this.physics.add.collider(this.floor, this.character);
         this.character.body.pushable = false;
-
         //list of obsticles
         this.textureList = ['table1'];
-
+        let timerConfig = {
+            fontFamily: 'Garamond',
+            fontSize: '28px',
+            color: '#FFFFFF',
+            align: 'center',
+            padding: {
+                top: 5,
+                bottom: 5,
+            },
+            fixedWidth: 150
+        }
+        this.timerdisplay = this.add.text(borderUISize * 17 + borderPadding, borderUISize, "Score: 69", timerConfig);
+        timerConfig.fixedWidth = 0;
         this.physics.disableUpdate();
     }
 
