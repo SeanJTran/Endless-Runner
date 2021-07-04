@@ -1,8 +1,6 @@
 class Play extends Phaser.Scene {
     constructor() {
         super("playScene");
-        this.gameStart = false;
-        this.gameOver = false;
     }
     
     preload() {
@@ -15,6 +13,7 @@ class Play extends Phaser.Scene {
     }
 
     create() {
+        //Background music
         let playBGM = {
             mute: false,
             volume: 0.5,
@@ -26,7 +25,14 @@ class Play extends Phaser.Scene {
             pan: 0
         }
         this.sound.play("playbgm", playBGM);
+
+        //initialize variables
+        this.gameStart = false;
+        this.gameOver = false;
+        this.canJump = false;
         this.floorSize = 10;
+
+        //text Config
         let playTextConfig = {
             fontSize: '32px',
             backgroundColor: '#ffffff',
@@ -41,7 +47,7 @@ class Play extends Phaser.Scene {
         this.bg = this.add.tileSprite(0, 0, 720 , 480, 'background').setOrigin(0, 0);
 
         //invisible floor object
-        this.floor = this.add.sprite(0, game.config.height - this.floorSize, 'floor');
+        this.floor = this.add.sprite(0, game.config.height - this.floorSize, 'floor').setOrigin(0,0);
         this.physics.add.existing(this.floor);
         this.floor.body.setAllowGravity(false);
         this.floor.body.setImmovable(true);
@@ -49,8 +55,12 @@ class Play extends Phaser.Scene {
         //Create Character sprite
         this.character = this.add.sprite(borderUISize + borderPadding, game.config.height - borderPadding*2 - borderUISize, 'character');
         this.physics.add.existing(this.character);
-        this.physics.add.collider(this.floor, this.character);
+        this.physics.add.collider(this.floor, this.character, function(){
+            console.log("can jump")
+            this.canJump = true;
+        }, null, this);
         this.character.body.pushable = false;
+
         //list of obsticles
         this.textureList = ['table1'];
         let timerConfig = {
@@ -72,6 +82,7 @@ class Play extends Phaser.Scene {
     update(){
         this.spaceDown = Phaser.Input.Keyboard.JustDown(keySpace)
         if(this.spaceDown && !this.gameStart && !this.gameOver){
+            console.log("Should run once");
             this.gameStart = true;
             this.physics.enableUpdate();
             this.spawnObsticle(this.textureList[0]);
@@ -83,12 +94,14 @@ class Play extends Phaser.Scene {
             this.bg.tilePositionX += 1;
 
             //player jump
-            if(this.spaceDown){
+            if(this.spaceDown && this.canJump){
                 this.character.body.setVelocity(0, -700);
+                this.canJump = false;
             }
         }
 
         if(this.gameOver){
+            this.physics.disableUpdate();
             //add text popup here to indicate players options
 
             //implement button listener here to restart or menu
@@ -96,28 +109,18 @@ class Play extends Phaser.Scene {
         }
     }
 
-    checkCollision(sprite1, sprite2) {
-        if(sprite1.x < sprite2.x + sprite2.width &&
-            sprite1.x + sprite1.width > sprite2.x &&
-            sprite1.y < sprite2.y + sprite2.height &&
-            sprite1.height + sprite1.y > sprite2.y) {
-               return true;
-        } else {
-            return false;
-        }
-    }
-
-    endGame(){
-        this.gameStart = false;
-        this.gameOver = true;
-    }
     //experimental method
     spawnObsticle(texture){
         this.obsticle = this.add.sprite(game.config.width, game.config.height - borderPadding*2 - borderUISize, texture).setOrigin(0,0);
         this.physics.add.existing(this.obsticle);
         this.obsticle.body.setAllowGravity(false);
         this.obsticle.body.setVelocity(-100, 0);
-        this.physics.add.collider(this.character, this.obsticle, endGame);
+        this.physics.add.collider(this.character, this.obsticle, function(){
+            if(!this.gameOver){
+                this.gameOver = true;
+                this.gameStart = false;
+            }
+        }, null, this);
         this.obsticle.body.pushable = false;
     }
 }
