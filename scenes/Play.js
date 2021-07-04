@@ -30,7 +30,9 @@ class Play extends Phaser.Scene {
         this.gameStart = false;
         this.gameOver = false;
         this.canJump = false;
+        this.obsticleList = [];
         this.floorSize = 10;
+        this.counter = 0;
 
         //text Config
         let playTextConfig = {
@@ -90,6 +92,21 @@ class Play extends Phaser.Scene {
         if(this.gameStart){
             //scroll background tile
             this.bg.tilePositionX += 1;
+            //spawn obsticles
+            this.random = Phaser.Math.Between(0, this.counter);
+            if(this.canSpawn){
+                this.canSpawn = false;
+                this.obsticleList[counter] = this.spawnObsticle(this.textureList[random]);
+                this.counter++;
+            }
+            //can spawn timer
+            if(!this.canSpawn && !this.timer){
+                this.canSpawn = true;
+                this.timer = true;
+                this.time.delayedCall(7000, () => {
+                    this.timer = false;
+                });
+            }
 
             //player jump
             if(this.spaceDown && this.canJump){
