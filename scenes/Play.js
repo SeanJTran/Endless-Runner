@@ -56,7 +56,6 @@ class Play extends Phaser.Scene {
         this.character = this.add.sprite(borderUISize + borderPadding, game.config.height - borderPadding*2 - borderUISize, 'character');
         this.physics.add.existing(this.character);
         this.physics.add.collider(this.floor, this.character, function(){
-            console.log("can jump")
             this.canJump = true;
         }, null, this);
         this.character.body.pushable = false;
@@ -82,7 +81,6 @@ class Play extends Phaser.Scene {
     update(){
         this.spaceDown = Phaser.Input.Keyboard.JustDown(keySpace)
         if(this.spaceDown && !this.gameStart && !this.gameOver){
-            console.log("Should run once");
             this.gameStart = true;
             this.physics.enableUpdate();
             this.spawnObsticle(this.textureList[0]);
