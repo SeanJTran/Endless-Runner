@@ -13,9 +13,6 @@ class Play extends Phaser.Scene {
         this.load.image('table1', './assets/table.png');
         this.load.image('table2', './assets/table2.png');
         this.load.image('table3', './assets/table3.png');
-        "s"
-        "x"
-        "y"
     }
 
     create() {
