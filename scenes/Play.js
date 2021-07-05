@@ -13,6 +13,9 @@ class Play extends Phaser.Scene {
         this.load.image('table1', './assets/table.png');
         this.load.image('table2', './assets/table2.png');
         this.load.image('table3', './assets/table3.png');
+
+        this.load.spritesheet('run', './assets/running.png', {frameWidth: 32, frameHeight: 64});
+        this.load.image('jump', './assets/PlayerJump.png');
         
     }
 
@@ -68,8 +71,17 @@ class Play extends Phaser.Scene {
         this.floor.body.setAllowGravity(false);
         this.floor.body.setImmovable(true);
 
+
+        //character animiation
+        this.running = this.anims.create({
+            key: 'running',
+            repeat: -1,
+            frames: this.anims.generateFrameNumbers('run', {start: 0, end: 3, first: 0}),
+            frameRate: 10
+        })
+
         //Create Character sprite
-        this.character = this.add.sprite(borderUISize + borderPadding, game.config.height - borderPadding*2 - borderUISize, 'character');
+        this.character = this.add.sprite(borderUISize + borderPadding, game.config.height - borderPadding*2 - borderUISize, 'run');
         this.physics.add.existing(this.character);
         this.physics.add.collider(this.floor, this.character, function(){
             this.canJump = true;
@@ -99,6 +111,7 @@ class Play extends Phaser.Scene {
         if(this.spaceDown && !this.gameStart && !this.gameOver){
             this.gameStart = true;
             this.physics.enableUpdate();
+            this.character.play('running');
             //this.spawnObsticle(this.textureList[0]);
             console.log("preGame");
         }
@@ -125,6 +138,12 @@ class Play extends Phaser.Scene {
                 });
             }
 
+            if(this.canJump){
+                this.running.resume();
+            }else{
+                this.running.pause();
+                this.character.setTexture('jump');
+            }
             //player jump
             if(this.spaceDown && this.canJump){
                 this.character.body.setVelocity(0, -700);
