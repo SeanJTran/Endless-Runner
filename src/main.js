@@ -2,13 +2,16 @@
 Collaborators: Alicia Zhen, Joe Carter, Sean Tran
 Game Title: Book It!
 Date Completed: 7/5/2021
-Point Breakdown:
-Submit a link to your GitHub repository (5)
-Submit a playable link on GitHub pages (5)
-In main.js (or equivalent), include a header with collaborator names, 
-game title, date completed, and your creative tilt justification (see below) (5) 
-At least one git commit per team member (5)
+Creative Tilt Justification:
 
+We are particularly proud of the visual style of our game (drawn in pixel art), 
+and how the theme of a library really helped everything else fall in place to meet our design goal (i.e., something relaxing to play). 
+In fact, the theme of a library also allowed us to implement calm, elevator music to match the overall theme of our game, 
+and for us to pinpoint what mechanics we wanted to implement to complement our design goals.
+
+We are also very proud of the scoring mechanic we implemented. For our scoring mechanic, we made it so that players will get a point 
+for every time they jump. This way, players who wanted more of a challenge out of our game could choose to play more risky / greedy 
+in order to get a higher score.
 */
 let config = {
     type: Phaser.CANVAS,
