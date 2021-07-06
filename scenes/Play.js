@@ -171,7 +171,7 @@ class Play extends Phaser.Scene {
                 this.endMenu = true;
                 //text popup here to indicate players options
                 this.add.text(game.config.width/5 - 20, game.config.height/2 - 50, 'Press SPACE to restart', this.playTextConfig).setOrigin(0,0);
-                this.time.delayedCall(2000, () => {
+                this.time.delayedCall(1, () => {
                     this.canRestart = true;
                 });
             }
