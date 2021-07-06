@@ -1,3 +1,9 @@
+/*
+Collaborators: Alicia Zhen, Joe Carter, Sean Tran
+Game Title: Book It!
+Date Completed: 7/5/2021
+Creative Tilt Justification: 
+*/
 let config = {
     type: Phaser.CANVAS,
     width: 720,

@@ -4,7 +4,9 @@ class Play extends Phaser.Scene {
     }
     
     preload() {
-        this.load.audio("playbgm", "./assets/bgm.mp3")
+        this.load.audio("playbgm", "./assets/bgm.mp3");
+        this.load.audio("Hit", "./assets/hitsound.wav");
+        this.load.audio("Jumped", "./assets/jumps.wav");
         this.load.image('windows', './assets/Windows.png');
         this.load.image('background', './assets/background.png');
         this.load.image('character', './assets/character.png');
@@ -146,6 +148,17 @@ class Play extends Phaser.Scene {
             }
             //player jump
             if(this.spaceDown && this.canJump){
+                let jumpSound = {
+                    mute: false,
+                    volume: 2,
+                    rate: 0.9,
+                    detune: 0,
+                    seek: 0,
+                    loop: false,
+                    delay: 0,
+                    pan: 0
+                }
+                this.sound.play("Jumped", jumpSound);
                 this.character.body.setVelocity(0, -700);
                 this.canJump = false;
                 this.score += 1;
@@ -178,6 +191,17 @@ class Play extends Phaser.Scene {
         this.obsticle.body.setVelocity(-200 - (25*this.score), 0);
         this.physics.add.collider(this.character, this.obsticle, function(){
             if(!this.gameOver){
+                let hitSound = {
+                    mute: false,
+                    volume: 0.1,
+                    rate: 1,
+                    detune: 0,
+                    seek: 0,
+                    loop: false,
+                    delay: 0,
+                    pan: 0
+                }
+                this.sound.play("Hit", hitSound);
                 this.gameOver = true;
                 this.gameStart = false;
             }
