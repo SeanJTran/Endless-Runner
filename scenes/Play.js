@@ -133,7 +133,7 @@ class Play extends Phaser.Scene {
             if(!this.canSpawn && !this.timer){
                 this.canSpawn = true;
                 this.timer = true;
-                this.time.delayedCall(3000, () => {
+                this.time.delayedCall(3000-(100*this.score), () => {
                     this.timer = false;
                 });
             }
@@ -175,7 +175,7 @@ class Play extends Phaser.Scene {
         this.obsticle = this.add.sprite(game.config.width, game.config.height - borderPadding*2 - borderUISize, texture).setOrigin(0,0);
         this.physics.add.existing(this.obsticle);
         this.obsticle.body.setAllowGravity(false);
-        this.obsticle.body.setVelocity(-100 - (25*this.score), 0);
+        this.obsticle.body.setVelocity(-200 - (25*this.score), 0);
         this.physics.add.collider(this.character, this.obsticle, function(){
             if(!this.gameOver){
                 this.gameOver = true;
