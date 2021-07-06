@@ -124,6 +124,7 @@ class Play extends Phaser.Scene {
             //spawn obsticles
             if(this.canSpawn){
                 this.canSpawn = false;
+                this.timer = false;
                 this.obsticleList[this.counter] = this.spawnObsticle(Phaser.Math.RND.pick([
                     'table1',
                     'table2',
