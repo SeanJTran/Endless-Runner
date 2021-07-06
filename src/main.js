@@ -2,6 +2,7 @@
 Collaborators: Alicia Zhen, Joe Carter, Sean Tran
 Game Title: Book It!
 Date Completed: 7/5/2021
+
 Creative Tilt Justification:
 
 We are particularly proud of the visual style of our game (drawn in pixel art), 
