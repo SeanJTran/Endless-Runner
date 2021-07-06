@@ -122,9 +122,9 @@ class Play extends Phaser.Scene {
             //scroll background tile
             this.bg.tilePositionX += 1;
             //spawn obsticles
+            this.timer = false;
             if(this.canSpawn){
                 this.canSpawn = false;
-                this.timer = false;
                 this.obsticleList[this.counter] = this.spawnObsticle(Phaser.Math.RND.pick([
                     'table1',
                     'table2',
