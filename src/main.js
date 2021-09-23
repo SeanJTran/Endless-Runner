@@ -25,7 +25,11 @@ let config = {
             gravity: {y: 1000},
             debug: false
         }
-    }
+    },
+    scale: {
+        mode: Phaser.Scale.FIT,
+        autoCenter: Phaser.Scale.CENTER_BOTH
+    },
 }
 
 let game = new Phaser.Game(config);
